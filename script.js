@@ -300,7 +300,7 @@ if (referralBtn) {
 }
 
 // Countdown timer for token distribution
-const countdownTimer = document.getElementById('countdown-timer');
+const distributionCountdownTimer = document.getElementById('countdown-timer');
 
 function formatTime(seconds) {
   const hours = Math.floor(seconds / 3600);
@@ -309,11 +309,11 @@ function formatTime(seconds) {
   return `${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(secs).padStart(2, '0')}s`;
 }
 
-if (countdownTimer) {
+if (distributionCountdownTimer) {
   let remainingSeconds = 2 * 3600 + 41 * 60 + 12;
 
   function updateCountdown() {
-    countdownTimer.textContent = formatTime(remainingSeconds);
+    distributionCountdownTimer.textContent = formatTime(remainingSeconds);
     remainingSeconds--;
 
     if (remainingSeconds < 0) {

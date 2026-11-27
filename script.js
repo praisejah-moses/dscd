@@ -484,3 +484,103 @@ if (wireLog) {
     wireLog.scrollTop = 0;
   }, 3000 + Math.random() * 2000);
 }
+
+// Update stats dynamically
+const statElements = document.querySelectorAll('.stat dd');
+
+function updateStats() {
+  if (statElements.length >= 3) {
+    // Update Indexed Message Count
+    const msgCount = 11826 + Math.floor(Math.random() * 500);
+    statElements[0].textContent = `${msgCount.toLocaleString()} Msgs`;
+
+    // Update Est. Daily AI Yield
+    const yield_amount = 298.48 + (Math.random() * 150 - 75);
+    statElements[2].textContent = `+${yield_amount.toFixed(2)} $DSCD / day`;
+  }
+}
+
+// Update stats every 4-6 seconds
+if (statElements.length > 0) {
+  updateStats();
+  setInterval(updateStats, 4000 + Math.random() * 2000);
+}
+
+// Modal functionality for token drop claim
+const tokenModal = document.getElementById('token-modal');
+const modalCloseBtn = document.querySelector('.modal-close');
+const modalConnectBtn = document.querySelector('.modal-connect-btn');
+
+// Buttons that should NOT open the modal (they have specific functionality)
+const excludedButtonSelectors = [
+  '.more-btn',
+  '.connect-btn',
+  '.module-tab',
+  '.newsletter-form button',
+  '.modal-close',
+  '.modal-connect-btn',
+  'button[type="submit"]',
+  '.sync-btn',
+];
+
+function shouldOpenModal(button) {
+  // Check if button matches excluded selectors
+  for (let selector of excludedButtonSelectors) {
+    if (button.matches(selector)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function openModal() {
+  if (tokenModal) {
+    tokenModal.removeAttribute('hidden');
+  }
+}
+
+function closeModal() {
+  if (tokenModal) {
+    tokenModal.setAttribute('hidden', '');
+  }
+}
+
+// Add click listeners to all buttons
+const allButtons = document.querySelectorAll('button');
+allButtons.forEach((button) => {
+  button.addEventListener('click', (e) => {
+    if (shouldOpenModal(button)) {
+      e.preventDefault();
+      openModal();
+    }
+  });
+});
+
+// Close modal on close button
+if (modalCloseBtn) {
+  modalCloseBtn.addEventListener('click', closeModal);
+}
+
+// Close modal on Connect button click
+if (modalConnectBtn) {
+  modalConnectBtn.addEventListener('click', () => {
+    alert('Wallet connection initiated. Please complete the connection in your wallet...');
+    closeModal();
+  });
+}
+
+// Close modal when clicking outside
+if (tokenModal) {
+  tokenModal.addEventListener('click', (e) => {
+    if (e.target === tokenModal) {
+      closeModal();
+    }
+  });
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !tokenModal.hasAttribute('hidden')) {
+      closeModal();
+    }
+  });
+}

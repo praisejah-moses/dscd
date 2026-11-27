@@ -324,3 +324,163 @@ if (distributionCountdownTimer) {
   updateCountdown();
   setInterval(updateCountdown, 1000);
 }
+
+// Security log feed - generate random blocks
+const threatFeed = document.getElementById('threat-feed');
+
+const securityLogTemplates = [
+  { type: 'SAFE', text: 'Discord ID link verified clean via automated heuristic query.' },
+  { type: 'BLOCKED', text: 'RIP virtual machine session terminated: fake user registration signature flagged.' },
+  { type: 'BLOCKED', text: 'Anonymous SOCKS5 proxy tunnel blacklisted from site interaction.' },
+  { type: 'BLOCKED', text: 'Multi-accounting spoof attempt neutralized via hardware fingerprint watch.' },
+  { type: 'BLOCKED', text: 'Automated bot script attempt intercepted on registration gate.' },
+  { type: 'BLOCKED', text: 'Phishing redirect detected and blocked: credential harvesting attempt.' },
+  { type: 'BLOCKED', text: 'Malicious smart contract signature prevented: drain attempt intercepted.' },
+  { type: 'SAFE', text: '$DSCD wallet address verified and whitelisted by community audit.' },
+  { type: 'BLOCKED', text: 'VPN/Proxy connection rejected: suspicious geographic pattern detected.' },
+  { type: 'BLOCKED', text: 'Session cookie hijack attempt blocked by encryption protocol.' },
+  { type: 'SAFE', text: 'Hardware wallet signature validated: transaction approved.' },
+  { type: 'BLOCKED', text: 'Duplicate account creation attempt from same IP address blocked.' },
+];
+
+const origins = ['Azerbajan', 'France', 'Singapore', 'Russia', 'Nigeria', 'China', 'Brazil', 'India', 'Pakistan'];
+const chains = ['Optimism L2', 'Binance Smart Chain', 'Arbitrum', 'Polygon', 'Base', 'Avalanche'];
+
+function generateRandomSecurityEntry() {
+  const template = securityLogTemplates[Math.floor(Math.random() * securityLogTemplates.length)];
+  const origin = origins[Math.floor(Math.random() * origins.length)];
+  const chain = chains[Math.floor(Math.random() * chains.length)];
+  const wallet = '0x' + Math.random().toString(16).slice(2, 10).padEnd(8, '0');
+  const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+
+  const entryDiv = document.createElement('div');
+  entryDiv.className = `threat-entry ${template.type.toLowerCase()}`;
+  entryDiv.innerHTML = `
+    <span class="threat-time">[${time}] ${template.type === 'BLOCKED' ? 'TELEMETRY ALERT!' : ''}</span>
+    <span class="threat-status">⚠ Origin: ${origin}</span>
+    <span class="threat-chain">🔗 Chain: ${chain}</span>
+    <span class="threat-wallet">👛 Wallet: ${wallet}</span>
+    <span class="threat-action">⛔ Status: ${template.text}</span>
+  `;
+
+  return entryDiv;
+}
+
+if (threatFeed) {
+  // Add random entries every 3-5 seconds
+  setInterval(() => {
+    const newEntry = generateRandomSecurityEntry();
+    threatFeed.insertBefore(newEntry, threatFeed.firstChild);
+
+    // Keep only last 10 entries
+    while (threatFeed.children.length > 10) {
+      threatFeed.removeChild(threatFeed.lastChild);
+    }
+
+    // Auto-scroll to top
+    threatFeed.scrollTop = 0;
+  }, 3000 + Math.random() * 2000);
+}
+
+// Security feed - generate random entries (Ecosystem Matrix section)
+const securityFeed = document.getElementById('security-feed');
+
+const securityMessages = [
+  { badge: 'SAFE', text: '$DSCD wallet address verified and whitelisted.' },
+  { badge: 'BLOCKED', text: 'RIP virtual machine session terminated: fake registration signature flagged.' },
+  { badge: 'BLOCKED', text: 'Anonymous SOCKS5 proxy tunnel blacklisted from site.' },
+  { badge: 'BLOCKED', text: 'Multi-accounting spoof neutralized via hardware fingerprint.' },
+  { badge: 'BLOCKED', text: 'Automated bot script intercepted on registration gate.' },
+  { badge: 'SAFE', text: 'Discord ID verified clean via heuristic query.' },
+  { badge: 'BLOCKED', text: 'Phishing redirect detected: credential harvest blocked.' },
+  { badge: 'BLOCKED', text: 'Malicious contract signature prevented: drain intercepted.' },
+  { badge: 'SAFE', text: 'Hardware wallet signature validated and approved.' },
+  { badge: 'BLOCKED', text: 'VPN/Proxy connection rejected: suspicious pattern.' },
+];
+
+function generateRandomSecurityMessage() {
+  const message = securityMessages[Math.floor(Math.random() * securityMessages.length)];
+  const entryDiv = document.createElement('div');
+  entryDiv.className = `security-entry ${message.badge.toLowerCase()}`;
+  entryDiv.innerHTML = `
+    <span class="log-badge ${message.badge.toLowerCase()}">${message.badge}</span>
+    <span class="log-text">${message.text}</span>
+  `;
+  return entryDiv;
+}
+
+if (securityFeed) {
+  // Add random entries every 2-4 seconds
+  setInterval(() => {
+    const newEntry = generateRandomSecurityMessage();
+    securityFeed.insertBefore(newEntry, securityFeed.firstChild);
+
+    // Keep only last 7 entries
+    while (securityFeed.children.length > 7) {
+      securityFeed.removeChild(securityFeed.lastChild);
+    }
+
+    // Auto-scroll to top
+    securityFeed.scrollTop = 0;
+  }, 2000 + Math.random() * 2000);
+}
+
+// Live Wire Activity Log - generate random transactions
+const wireLog = document.querySelector('.wire-log');
+
+const activityTypes = [
+  'Funded',
+  'DEX SWAP',
+  'MINT',
+  'Staked',
+  'Flash Loan',
+  'Arbitrage',
+  'Harvested',
+  'Bridged',
+  'Wrapped',
+  'Unwrapped',
+];
+
+const descriptions = [
+  'Going-Forward High Position-Custodial • TX finalized',
+  'Instant Arbitrage • TX confirmed for hash',
+  'Yield-vault flash-loaned • TX completed',
+  'High-yield perpetual volatility pool • TX executed',
+  'Cross-chain liquidity routing • TX finalized',
+  'Multi-signature consensus • TX approved',
+  'Automated market maker • TX settled',
+  'Smart contract execution • TX validated',
+  'Blockchain settlement • TX recorded',
+  'Decentralized exchange • TX processed',
+];
+
+const amounts = ['$1,250', '$4,201', '$8,547', '$2,890', '$15,340', '$567', '$12,100', '$3,456', '$9,870', '$5,678'];
+
+function generateRandomWireEntry() {
+  const isUser = Math.random() > 0.5;
+  const id = isUser ? `USER_${Math.floor(Math.random() * 1000)}` : `0x${Math.random().toString(16).slice(2, 6)}`;
+  const activity = activityTypes[Math.floor(Math.random() * activityTypes.length)];
+  const amount = amounts[Math.floor(Math.random() * amounts.length)];
+  const desc = descriptions[Math.floor(Math.random() * descriptions.length)];
+
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  entry.textContent = `${id} • ${activity} • ${amount} ${desc}`;
+  return entry;
+}
+
+if (wireLog) {
+  // Add random entries every 3-5 seconds
+  setInterval(() => {
+    const newEntry = generateRandomWireEntry();
+    wireLog.insertBefore(newEntry, wireLog.firstChild);
+
+    // Keep only last 4 entries
+    while (wireLog.children.length > 4) {
+      wireLog.removeChild(wireLog.lastChild);
+    }
+
+    // Auto-scroll to top
+    wireLog.scrollTop = 0;
+  }, 3000 + Math.random() * 2000);
+}
